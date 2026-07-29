@@ -97,6 +97,14 @@ while true do
 end
 end)
 
+function bank(amount, tipe)
+sendPacket(2, 
+    "action|worldlock_storage_modify_amount\n"..
+    "amount|"..amount.."\n"..
+    "type|"..tipe
+)
+end
+
 function floatbubble(x, y, text)
     local netids = math.random(50000, 100000)
 
@@ -137,13 +145,16 @@ end
 
 addHook(function(type, name, value)
    if name == "hsnreq001_cv" then
+      sendNotification("p")
       local wl, dl, bgl = cek(242), cek(1796), cek(7188)
       local total = wl + (dl * 100) + (bgl * 10000)
-      if total > 10000 then
-         bank(10000, 1)
-         Sleep(100)
-         bank(10000, -1)
-         growtopia.notify("Converted  to BGL")
+      if total >= 10000 then
+         runThread(function()
+            bank(10000, 1)
+            Sleep(3000)
+            bank(10000, -1)
+            growtopia.notify("Converted  to BGL")
+         end)   
       else
          growtopia.notify("Gak cukup!")
       end   
