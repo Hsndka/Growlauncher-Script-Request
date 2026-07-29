@@ -1,3 +1,25 @@
+local buyerID = tostring(getDiscordID())
+
+local buyerList = {
+  ["636196321232945152"] = "Author",
+  ["1517903098587123902"] = "@Poull12"
+}
+
+function cekMember(playerID)
+  if buyerList[playerID] then
+    return true, buyerList[playerID] -- return true + nama
+  else
+    return false, nil
+  end
+end
+
+if not cekMember(buyerID) then
+  sendNotification("Skrip ini hanya untuk @Poull12")
+  return false
+end  
+
+sendNotification("Req001 added")
+
 addCategory("HsnGL", "FileOpen")
 
 local Hsnreq001 = [[
